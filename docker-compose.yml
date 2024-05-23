@@ -4,7 +4,6 @@ networks:
 
 services:
   app:
-    image: php:8.3-apache
     build:
       dockerfile: docker/app/Dockerfile
       context: .
