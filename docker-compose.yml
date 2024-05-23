@@ -1,0 +1,30 @@
+networks:
+  rmp:
+    driver: bridge
+
+services:
+  app:
+    image: php:8.3-apache
+    build:
+      dockerfile: docker/app/Dockerfile
+      context: .
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 80:80
+    networks:
+      - rmp
+  db:
+    image: mysql:8.0
+    volumes:
+      - ./db-data:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+    networks:
+      - rmp
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    ports:
+      - 8080:80
+    networks:
+      - rmp
