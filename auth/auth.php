@@ -23,6 +23,7 @@ if (!empty($_POST['password']) && !empty($_POST['login'])) {
     if (!empty($user)) {
         $_SESSION['logged_in'] = true;
         $_SESSION['auth'] = [
+            'id' => mysqli_insert_id($link),
             'login' => $login,
         ];
         header("Location: index.php");
@@ -35,6 +36,10 @@ if (!empty($_POST['password']) && !empty($_POST['login'])) {
 <?php
 if (!isset($_SESSION['logged_in'])) {
     ?>
+    <p>
+        Еще не зарегистрированы?
+        <a href="register.php">Регистрация</a>
+    </p>
     <form action="" method="post">
         <input name="login" placeholder="Логин">
         <input name="password" type="password" placeholder="password">
