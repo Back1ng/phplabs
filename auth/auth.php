@@ -22,6 +22,9 @@ if (!empty($_POST['password']) && !empty($_POST['login'])) {
 
     if (!empty($user)) {
         $_SESSION['logged_in'] = true;
+        $_SESSION['auth'] = [
+            'login' => $login,
+        ];
         header("Location: index.php");
     } else {
         echo "Неверно введен логин или пароль";
