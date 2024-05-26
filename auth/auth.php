@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $host = 'db';
 $user = 'root';
 $password = 'password';
@@ -10,7 +12,6 @@ $link = mysqli_connect($host, $user, $password, $db_name);
 mysqli_query($link, 'SET NAMES utf8');
 
 if (!empty($_POST['password']) && !empty($_POST['login'])) {
-
     $login = $_POST['login'];
     $password = $_POST['password'];
 
@@ -20,15 +21,22 @@ if (!empty($_POST['password']) && !empty($_POST['login'])) {
     $user = mysqli_fetch_assoc($result);
 
     if (!empty($user)) {
-        // authenticated
+        $_SESSION['logged_in'] = true;
+        header("Location: index.php");
     } else {
-        // non auth
+        echo "Неверно введен логин или пароль";
     }
 }
 ?>
 
-<form action="" method="post">
-    <input name="login">
-    <input name="password" type="password">
-    <input type="submit" value="Отправить">
-</form>
+<?php
+if (!isset($_SESSION['logged_in'])) {
+    ?>
+    <form action="" method="post">
+        <input name="login" placeholder="Логин">
+        <input name="password" type="password" placeholder="password">
+        <input type="submit" value="Отправить">
+    </form>
+    <?php
+}
+?>
